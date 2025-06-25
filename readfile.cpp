@@ -6,6 +6,24 @@
 
 using namespace std;
 
+// Bubble sort function
+void bubbleSort(double arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        bool swapped = false;
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                // Swap elements
+                double temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+                swapped = true;
+            }
+        }
+        // If no swaps occurred, the array is already sorted
+        if (!swapped) break;
+    }
+}
+
 int main() {
     const int Max_size = 1000;
     double data[Max_size];
@@ -47,11 +65,23 @@ int main() {
 
     file.close();
 
-    cout << "Total numbers read: " << count << endl;
+    cout << "\nTotal numbers read: " << count << endl;
 
+    // Display original numbers
+    cout << "\nOriginal numbers:\n";
     for (int i = 0; i < count; i++) {
-        cout << "Number " << i + 1 << ": " << data[i] << endl;
+        cout << data[i] << " ";
     }
+
+    // Sort the array
+    bubbleSort(data, count);
+
+    // Display sorted numbers
+    cout << "\n\nSorted numbers:\n";
+    for (int i = 0; i < count; i++) {
+        cout << data[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }
