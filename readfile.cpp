@@ -30,17 +30,16 @@ int main() {
     int count = 0;
 
     // This buffer will hold the selected file path
-    char filePath[MAX_PATH] = "";
+    wchar_t filePath[MAX_PATH] = L"";
 
-    // Set up the OPENFILENAME structure
-    OPENFILENAME ofn = { 0 };
+    OPENFILENAMEW ofn = { 0 };
     ofn.lStructSize = sizeof(ofn);
     ofn.hwndOwner = NULL;
-    ofn.lpstrFilter = "Text Files\0*.txt\0All Files\0*.*\0";
+    ofn.lpstrFilter = L"Text Files\0*.txt\0All Files\0*.*\0";
     ofn.lpstrFile = filePath;
     ofn.nMaxFile = MAX_PATH;
     ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-    ofn.lpstrDefExt = "txt";
+    ofn.lpstrDefExt = L"txt";
 
     // Show the file browser dialog
     if (!GetOpenFileName(&ofn)) {
