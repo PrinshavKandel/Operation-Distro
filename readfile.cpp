@@ -80,6 +80,40 @@ void calculateStats(double arr[],int n, tstats& s)
     }
     s.iqr = q3 - q1;
 }
+#include <vector>
+#include <cmath>
+
+// Gaussian/Normal PDF formula
+double normalPDF(double x, double mean, double std_dev) {
+    const double PI = 3.14159265358979323846;
+    double exponent = -0.5 * std::pow((x - mean) / std_dev, 2);
+    return (1.0 / (std_dev * std::sqrt(2 * PI))) * std::exp(exponent);
+}
+
+// Generate x and y values for PDF plot
+void generatePDFPoints(std::vector<double>& x_vals, std::vector<double>& y_vals, const tstasts& s, int points = 100) {
+    double range_start = s.mean - 4 * s.std_dev;
+    double range_end   = s.mean + 4 * s.std_dev;
+    double step = (range_end - range_start) / points;
+
+    x_vals.clear();
+    y_vals.clear();
+
+    for (int i = 0; i <= points; ++i) {
+        double x = range_start + i * step;
+        double y = normalPDF(x, s.mean, s.std_dev);
+        x_vals.push_back(x);
+        y_vals.push_back(y);
+    }
+}
+
+
+
+
+
+
+
+
 int main() {
     const int Max_size = 1000;
     double data[Max_size];
@@ -132,4 +166,6 @@ int main() {
     cout << "IQR: " << s.iqr << endl;
 
     return 0;
+    std::vector<double> x, y;
+    generatePDFPoints(x, y, s);
 }
