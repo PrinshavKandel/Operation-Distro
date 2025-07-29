@@ -24,6 +24,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    static constexpr int Max_size = 1000;
+    double data[Max_size];
+    int count = 0;
     void updateStatistics(double mean, double mode, double median, double stddev, double variance, double iqr);
     void updateGraph();
 };
