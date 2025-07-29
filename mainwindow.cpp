@@ -7,9 +7,7 @@
 #include <QDebug>
 #include <algorithm>
 #include <cmath>
-#include <vector>
 #include <unordered_map>
-
 
 // Structure definition
 struct tstats {
@@ -22,6 +20,16 @@ struct tstats {
 };
 
 tstats s;
+
+// Global constants and buffers
+const int Max_size = 10000;
+const int NumPoints = 500;
+
+double data[Max_size];
+int count = 0;
+
+double x_vals[NumPoints];
+double y_vals[NumPoints];
 
 void bubbleSort(double arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
@@ -45,10 +53,7 @@ void calculateStats(double arr[], int n, tstats &s) {
     s.mean = sum / n;
 
     // Median
-    if (n % 2 == 0)
-        s.median = (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
-    else
-        s.median = arr[n / 2];
+    s.median = (n % 2 == 0) ? (arr[n/2 - 1] + arr[n/2]) / 2.0 : arr[n/2];
 
     // Mode
     std::unordered_map<double, int> freq;
@@ -88,19 +93,16 @@ double normalPDF(double x, double mean, double std_dev) {
     return (1.0 / (std_dev * std::sqrt(2 * PI))) * std::exp(exponent);
 }
 
-void generatePDFPoints(std::vector<double> &x_vals, std::vector<double> &y_vals, const tstats &s, int points = 100) {
-    double range_start = s.mean - 4 * s.std_dev;
-    double range_end = s.mean + 4 * s.std_dev;
-    double step = (range_end - range_start) / points;
+// ✅ Now using C-style arrays
+void generatePDFPoints(double x_vals[], double y_vals[], int points, const tstats &s) {
+    double start = s.mean - 4 * s.std_dev;
+    double end = s.mean + 4 * s.std_dev;
+    double step = (end - start) / (points - 1);
 
-    x_vals.clear();
-    y_vals.clear();
-
-    for (int i = 0; i <= points; ++i) {
-        double x = range_start + i * step;
-        double y = normalPDF(x, s.mean, s.std_dev);
-        x_vals.push_back(x);
-        y_vals.push_back(y);
+    for (int i = 0; i < points; ++i) {
+        double x = start + i * step;
+        x_vals[i] = x;
+        y_vals[i] = normalPDF(x, s.mean, s.std_dev);
     }
 }
 
@@ -119,10 +121,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// File Open (works on Mac & Linux using QFileDialog)
+// File loader
 void MainWindow::onNewFileClicked()
 {
-
     QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "Text Files (*.txt);;All Files (*)");
     if (fileName.isEmpty()) {
         qDebug() << "No file selected.";
@@ -136,13 +137,13 @@ void MainWindow::onNewFileClicked()
     }
 
     QTextStream in(&file);
-    count = 0; // Reset count before loading
+    count = 0;
 
     while (!in.atEnd() && count < Max_size) {
         QString line = in.readLine();
         QStringList values = line.split(',');
 
-        for (const QString& value : values) {
+        for (const QString &value : values) {
             bool ok;
             double number = value.toDouble(&ok);
             if (ok && count < Max_size) {
@@ -154,16 +155,20 @@ void MainWindow::onNewFileClicked()
     qDebug() << "File loaded with" << count << "values.";
 }
 
-// Calculate and Display Stats
+// Calculate stats and show graph
 void MainWindow::onCalculateGraphClicked()
 {
-    calculateStats(data, count, s);
+    if (count == 0) {
+        QMessageBox::warning(this, "Error", "No data loaded.");
+        return;
+    }
 
+    calculateStats(data, count, s);
     updateStatistics(s.mean, s.mode, s.median, s.std_dev, s.variance, s.iqr);
-    //updateGraph(); // Must be implemented elsewhere to show plot
+    updateGraph();
 }
 
-// Update the Labels in UI
+// Update stat labels
 void MainWindow::updateStatistics(double mean, double mode, double median, double stddev, double variance, double iqr)
 {
     ui->labelMean->setText(QString::number(mean, 'f', 2));
@@ -173,8 +178,24 @@ void MainWindow::updateStatistics(double mean, double mode, double median, doubl
     ui->labelVar->setText(QString::number(variance, 'f', 2));
     ui->labelIQR->setText(QString::number(iqr, 'f', 2));
 }
-//Plots graph based on the given values
+
+// ✅ Updated to use array → QVector for plotting
 void MainWindow::updateGraph()
 {
+    generatePDFPoints(x_vals, y_vals, NumPoints, s);
 
+    QVector<double> xVec(NumPoints), yVec(NumPoints);
+    for (int i = 0; i < NumPoints; ++i) {
+        xVec[i] = x_vals[i];
+        yVec[i] = y_vals[i];
+    }
+
+    ui->customPlot->clearGraphs();
+    ui->customPlot->addGraph();
+    ui->customPlot->graph(0)->setData(xVec, yVec);
+    ui->customPlot->xAxis->setLabel("x");
+    ui->customPlot->yAxis->setLabel("Probability Density");
+    ui->customPlot->xAxis->setRange(s.mean - 4 * s.std_dev, s.mean + 4 * s.std_dev);
+    ui->customPlot->yAxis->rescale();
+    ui->customPlot->replot();
 }
