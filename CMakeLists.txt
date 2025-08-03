@@ -15,8 +15,9 @@ qt_add_executable(BellCurveMac
     mainwindow.ui
     qcustomplot.cpp
     qcustomplot.h
+    ui_mainwindow.h
 )
 
 target_include_directories(BellCurveMac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(BellCurveMac PRIVATE Qt6::Widgets Qt6::PrintSupport)
-target_compile_options(BellCurveMac PRIVATE -Wno-deprecated-declarations)
+target_compile_options(BellCurveMac PRIVATE -Wno-deprecated-declar
