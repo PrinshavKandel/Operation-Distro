@@ -78,6 +78,17 @@ void calculateStats(double arr[], int n, tstats &s) {
         q3 = arr[mid + mid / 2 + 1];
     }
     s.iqr = q3 - q1;
+
+    // ✅ Thresholds
+    double tA = s.mean + 2.0 * s.std_dev;
+    double tAminus = s.mean + 1.5 * s.std_dev;
+    double tBplus = s.mean + 1.0 * s.std_dev;
+    double tB = s.mean + 0.5 * s.std_dev;
+    double tBminus = s.mean;
+    double tCplus = s.mean - 0.5 * s.std_dev;
+    double tC = s.mean - 1.0 * s.std_dev;
+    double tCminus = s.mean - 1.5 * s.std_dev;
+    double tD = s.mean - 2.0 * s.std_dev;
 }
 
 double normalPDF(double x, double mean, double std_dev) {
@@ -233,3 +244,4 @@ void MainWindow::onMouseMoveInPlot(QMouseEvent *event)
         QToolTip::hideText();
     }
 }
+
