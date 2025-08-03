@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QString>
+#include <QVector>
+#include <QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,19 +16,29 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void onCalculateGraphClicked(); //Responds to buttonCalc clicks
-    void onNewFileClicked(); // Responds to buttonNew clicks
+    void onCalculateGraphClicked();   // Responds to Calculate button
+    void onNewFileClicked();          // Responds to New File button
+    void onMouseMoveInPlot(QMouseEvent *event); // Hover interaction
 
 private:
     Ui::MainWindow *ui;
-    static constexpr int Max_size = 1000;
+
+    QVector<double> x;
+    QVector<double> y;
+public:
+    static constexpr int Max_size = 10000;
+    static constexpr int NumPoints = 500;
+
     double data[Max_size];
     int count = 0;
-    void updateStatistics(double mean, double mode, double median, double stddev, double variance, double iqr);
+
+    void updateStatistics(double mean, double mode, double median,
+                          double stddev, double variance, double iqr);
     void updateGraph();
 };
+
 #endif // MAINWINDOW_H
