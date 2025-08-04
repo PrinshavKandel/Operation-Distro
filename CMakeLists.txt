@@ -20,4 +20,4 @@ qt_add_executable(BellCurveMac
 
 target_include_directories(BellCurveMac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(BellCurveMac PRIVATE Qt6::Widgets Qt6::PrintSupport)
-target_compile_options(BellCurveMac PRIVATE -Wno-deprecated-declar
+target_compile_options(BellCurveMac PRIVATE -Wno-deprecated-declarations)
