@@ -22,7 +22,7 @@ public:
 private slots:
     void onCalculateGraphClicked();   // Responds to Calculate button
     void onNewFileClicked();          // Responds to New File button
-    void onMouseMoveInPlot(QMouseEvent *event); // Hover interaction
+    void onMouseMoveInPlot(QMouseEvent *event);    // Hover interaction
 
 private:
     Ui::MainWindow *ui;
@@ -39,6 +39,7 @@ public:
     void updateStatistics(double mean, double mode, double median,
                           double stddev, double variance, double iqr);
     void updateGraph();
+    void onupdategrades();
 };
 
 #endif // MAINWINDOW_H
