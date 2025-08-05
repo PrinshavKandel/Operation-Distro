@@ -86,15 +86,15 @@ void calculateStats(double arr[], int n, tstats &s) {
     s.iqr = q3 - q1;
 
     // ✅ Thresholds
-    tA = (s.mean + 1.5 * s.std_dev,max_score);
-    tAminus = s.mean + 1 * s.std_dev;
+    tA = std::min(s.mean + 1 * s.std_dev,1.0*max_score);
+    tAminus = s.mean + 0.75 * s.std_dev;
     tBplus = s.mean + 0.5 * s.std_dev;
-    tB = s.mean + 0 * s.std_dev;
-    tBminus = s.mean-0.5*s.std_dev;
-    tCplus = s.mean - 1 * s.std_dev;
-    tC = s.mean - 1.5 * s.std_dev;
-    tCminus = s.mean - 2 * s.std_dev;
-    tD = s.mean - 2.5 * s.std_dev;
+    tB = s.mean + 0.25* s.std_dev;
+    tBminus = s.mean-0*s.std_dev;
+    tCplus = s.mean - 0.25 * s.std_dev;
+    tC = s.mean - 0.5 * s.std_dev;
+    tCminus = s.mean - 0.75* s.std_dev;
+    tD =std::max(s.mean - 1 * s.std_dev,0.35*max_score);
 }
 
 double normalPDF(double x, double mean, double std_dev) {
@@ -264,5 +264,6 @@ void MainWindow :: onupdategrades(){
     ui->LabelD->setText(QString::number(tD));
 
 }
+
 
 
