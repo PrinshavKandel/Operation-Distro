@@ -9,6 +9,7 @@
 #include <cmath>
 #include <algorithm>
 #include <unordered_map>
+using namespace std;
 
 struct tstats {
     double mean;
@@ -20,6 +21,8 @@ struct tstats {
 };
 
 tstats s;
+int tA,tAminus,tBplus,tB,tBminus,tCplus,tC,tCminus,tD;
+int max_score,Minimum_score;
 
 static double x_vals[MainWindow::NumPoints];
 static double y_vals[MainWindow::NumPoints];
@@ -34,7 +37,10 @@ void bubbleSort(double arr[], int n) {
             }
         }
         if (!swapped) break;
+        max_score = arr[n - 1];
+        Minimum_score = arr[1];
     }
+
 }
 
 void calculateStats(double arr[], int n, tstats &s) {
@@ -80,15 +86,15 @@ void calculateStats(double arr[], int n, tstats &s) {
     s.iqr = q3 - q1;
 
     // ✅ Thresholds
-    double tA = s.mean + 2.0 * s.std_dev;
-    double tAminus = s.mean + 1.5 * s.std_dev;
-    double tBplus = s.mean + 1.0 * s.std_dev;
-    double tB = s.mean + 0.5 * s.std_dev;
-    double tBminus = s.mean;
-    double tCplus = s.mean - 0.5 * s.std_dev;
-    double tC = s.mean - 1.0 * s.std_dev;
-    double tCminus = s.mean - 1.5 * s.std_dev;
-    double tD = s.mean - 2.0 * s.std_dev;
+    tA = (s.mean + 1.5 * s.std_dev,max_score);
+    tAminus = s.mean + 1 * s.std_dev;
+    tBplus = s.mean + 0.5 * s.std_dev;
+    tB = s.mean + 0 * s.std_dev;
+    tBminus = s.mean-0.5*s.std_dev;
+    tCplus = s.mean - 1 * s.std_dev;
+    tC = s.mean - 1.5 * s.std_dev;
+    tCminus = s.mean - 2 * s.std_dev;
+    tD = s.mean - 2.5 * s.std_dev;
 }
 
 double normalPDF(double x, double mean, double std_dev) {
@@ -182,6 +188,8 @@ void MainWindow::onCalculateGraphClicked()
     calculateStats(data, count, s);
     updateStatistics(s.mean, s.mode, s.median, s.std_dev, s.variance, s.iqr);
     updateGraph();
+    onupdategrades();
+
 }
 
 void MainWindow::updateStatistics(double mean, double mode, double median,
@@ -211,7 +219,7 @@ void MainWindow::updateGraph()
     ui->customPlot->graph(0)->setData(x, y);
     ui->customPlot->xAxis->setLabel("x");
     ui->customPlot->yAxis->setLabel("Probability Density");
-    ui->customPlot->xAxis->setRange(s.mean - 4 * s.std_dev, s.mean + 4 * s.std_dev);
+    ui->customPlot->xAxis->setRange(s.mean - 2.5*s.std_dev ,max_score);
     ui->customPlot->yAxis->rescale();
     ui->customPlot->replot();
 }
@@ -244,4 +252,17 @@ void MainWindow::onMouseMoveInPlot(QMouseEvent *event)
         QToolTip::hideText();
     }
 }
+void MainWindow :: onupdategrades(){
+    ui->LabelA->setText(QString::number(tA));
+    ui->LabelAminus->setText(QString::number(tAminus));
+    ui->LabelBplus->setText(QString::number(tBplus));
+    ui->LabelB->setText(QString::number(tB));
+    ui->LabelBminus->setText(QString::number(tBminus));
+    ui->LabelCplus->setText(QString::number(tCplus));
+    ui->LabelC->setText(QString::number(tC));
+    ui->LabelCminus->setText(QString::number(tCminus));
+    ui->LabelD->setText(QString::number(tD));
+
+}
+
 
