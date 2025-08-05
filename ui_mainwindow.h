@@ -22,7 +22,6 @@ public:
     QVBoxLayout *verticalLayout;
     QFrame *line_5;
     QLabel *labelHeader;
-    QFrame *line;
     QWidget *verticalLayoutWidget_2;
     QVBoxLayout *verticalLayout_2;
     QFrame *line_4;
@@ -59,6 +58,25 @@ public:
     QFrame *line_13;
     QCustomPlot *customPlot;
     QFrame *line_14;
+    QLabel *LabelA;
+    QLabel *LabelAminus;
+    QLabel *LabelBplus;
+    QLabel *LabelB;
+    QLabel *LabelBminus;
+    QLabel *LabelCplus;
+    QLabel *LabelC;
+    QLabel *LabelCminus;
+    QLabel *LabelD;
+    QFrame *line_15;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
+    QLabel *label_8;
+    QLabel *label_9;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -71,7 +89,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(0, 0, 1281, 80));
+        verticalLayoutWidget->setGeometry(QRect(0, 0, 1281, 96));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -90,13 +108,6 @@ public:
         labelHeader->setFont(font);
 
         verticalLayout->addWidget(labelHeader, 0, Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter);
-
-        line = new QFrame(verticalLayoutWidget);
-        line->setObjectName("line");
-        line->setFrameShape(QFrame::Shape::HLine);
-        line->setFrameShadow(QFrame::Shadow::Sunken);
-
-        verticalLayout->addWidget(line);
 
         verticalLayoutWidget_2 = new QWidget(centralwidget);
         verticalLayoutWidget_2->setObjectName("verticalLayoutWidget_2");
@@ -259,7 +270,7 @@ public:
 
         horizontalLayoutWidget = new QWidget(centralwidget);
         horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
-        horizontalLayoutWidget->setGeometry(QRect(290, 599, 701, 91));
+        horizontalLayoutWidget->setGeometry(QRect(300, 600, 681, 91));
         horizontalLayout_2 = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -287,17 +298,76 @@ public:
         line_12->setFrameShadow(QFrame::Shadow::Sunken);
         line_13 = new QFrame(centralwidget);
         line_13->setObjectName("line_13");
-        line_13->setGeometry(QRect(290, 591, 701, 20));
+        line_13->setGeometry(QRect(290, 560, 701, 81));
         line_13->setFrameShape(QFrame::Shape::HLine);
         line_13->setFrameShadow(QFrame::Shadow::Sunken);
         customPlot = new QCustomPlot(centralwidget);
         customPlot->setObjectName("customPlot");
-        customPlot->setGeometry(QRect(300, 90, 681, 501));
+        customPlot->setGeometry(QRect(300, 100, 681, 441));
         line_14 = new QFrame(centralwidget);
         line_14->setObjectName("line_14");
         line_14->setGeometry(QRect(280, 80, 20, 611));
         line_14->setFrameShape(QFrame::Shape::VLine);
         line_14->setFrameShadow(QFrame::Shadow::Sunken);
+        LabelA = new QLabel(centralwidget);
+        LabelA->setObjectName("LabelA");
+        LabelA->setGeometry(QRect(300, 570, 63, 20));
+        LabelAminus = new QLabel(centralwidget);
+        LabelAminus->setObjectName("LabelAminus");
+        LabelAminus->setGeometry(QRect(370, 570, 51, 20));
+        LabelBplus = new QLabel(centralwidget);
+        LabelBplus->setObjectName("LabelBplus");
+        LabelBplus->setGeometry(QRect(460, 570, 41, 20));
+        LabelB = new QLabel(centralwidget);
+        LabelB->setObjectName("LabelB");
+        LabelB->setGeometry(QRect(540, 570, 41, 20));
+        LabelBminus = new QLabel(centralwidget);
+        LabelBminus->setObjectName("LabelBminus");
+        LabelBminus->setGeometry(QRect(620, 570, 41, 20));
+        LabelCplus = new QLabel(centralwidget);
+        LabelCplus->setObjectName("LabelCplus");
+        LabelCplus->setGeometry(QRect(690, 570, 51, 20));
+        LabelC = new QLabel(centralwidget);
+        LabelC->setObjectName("LabelC");
+        LabelC->setGeometry(QRect(770, 570, 41, 20));
+        LabelCminus = new QLabel(centralwidget);
+        LabelCminus->setObjectName("LabelCminus");
+        LabelCminus->setGeometry(QRect(840, 570, 41, 20));
+        LabelD = new QLabel(centralwidget);
+        LabelD->setObjectName("LabelD");
+        LabelD->setGeometry(QRect(920, 570, 41, 20));
+        line_15 = new QFrame(centralwidget);
+        line_15->setObjectName("line_15");
+        line_15->setGeometry(QRect(290, 50, 701, 81));
+        line_15->setFrameShape(QFrame::Shape::HLine);
+        line_15->setFrameShadow(QFrame::Shadow::Sunken);
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setGeometry(QRect(300, 550, 63, 20));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName("label_2");
+        label_2->setGeometry(QRect(370, 550, 63, 20));
+        label_3 = new QLabel(centralwidget);
+        label_3->setObjectName("label_3");
+        label_3->setGeometry(QRect(460, 550, 63, 20));
+        label_4 = new QLabel(centralwidget);
+        label_4->setObjectName("label_4");
+        label_4->setGeometry(QRect(540, 550, 63, 20));
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName("label_5");
+        label_5->setGeometry(QRect(620, 550, 63, 20));
+        label_6 = new QLabel(centralwidget);
+        label_6->setObjectName("label_6");
+        label_6->setGeometry(QRect(690, 550, 63, 20));
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(770, 550, 63, 20));
+        label_8 = new QLabel(centralwidget);
+        label_8->setObjectName("label_8");
+        label_8->setGeometry(QRect(840, 550, 63, 20));
+        label_9 = new QLabel(centralwidget);
+        label_9->setObjectName("label_9");
+        label_9->setGeometry(QRect(920, 550, 63, 20));
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
@@ -324,12 +394,30 @@ public:
         labelIQR->setText(QString());
         buttonNew->setText(QCoreApplication::translate("MainWindow", "New File", nullptr));
         buttonCalc->setText(QCoreApplication::translate("MainWindow", "Calculate Graph", nullptr));
+        LabelA->setText(QString());
+        LabelAminus->setText(QString());
+        LabelBplus->setText(QString());
+        LabelB->setText(QString());
+        LabelBminus->setText(QString());
+        LabelCplus->setText(QString());
+        LabelC->setText(QString());
+        LabelCminus->setText(QString());
+        LabelD->setText(QString());
+        label->setText(QCoreApplication::translate("MainWindow", "A:", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "A-:", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "B+:", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "B:", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "B-:", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "C+:", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "C-:", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "C-:", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "D:", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+class MainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
