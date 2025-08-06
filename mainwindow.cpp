@@ -9,7 +9,7 @@
 #include <cmath>
 #include <algorithm>
 #include <unordered_map>
-using namespace std;
+
 
 struct tstats {
     double mean;
@@ -38,7 +38,7 @@ void bubbleSort(double arr[], int n) {
         }
         if (!swapped) break;
         max_score = arr[n - 1];
-        Minimum_score = arr[1];
+        Minimum_score = arr[0];
     }
 
 }
@@ -85,7 +85,7 @@ void calculateStats(double arr[], int n, tstats &s) {
     }
     s.iqr = q3 - q1;
 
-    // ✅ Thresholds
+    //Thresholds
     tA = std::min(s.mean + 1 * s.std_dev,1.0*max_score);
     tAminus = s.mean + 0.75 * s.std_dev;
     tBplus = s.mean + 0.5 * s.std_dev;
@@ -94,7 +94,7 @@ void calculateStats(double arr[], int n, tstats &s) {
     tCplus = s.mean - 0.25 * s.std_dev;
     tC = s.mean - 0.5 * s.std_dev;
     tCminus = s.mean - 0.75* s.std_dev;
-    tD =std::max(s.mean - 1 * s.std_dev,0.35*max_score);
+    tD =s.mean - 1 * s.std_dev;
 }
 
 double normalPDF(double x, double mean, double std_dev) {
@@ -104,8 +104,8 @@ double normalPDF(double x, double mean, double std_dev) {
 }
 
 void generatePDFPoints(double x_vals[], double y_vals[], int points, const tstats &s) {
-    double start = s.mean - 4 * s.std_dev;
-    double end = s.mean + 4 * s.std_dev;
+    double start = Minimum_score;
+    double end = max_score;
     double step = (end - start) / (points - 1);
 
     for (int i = 0; i < points; ++i) {
@@ -195,12 +195,12 @@ void MainWindow::onCalculateGraphClicked()
 void MainWindow::updateStatistics(double mean, double mode, double median,
                                   double stddev, double variance, double iqr)
 {
-    ui->labelMean->setText(QString::number(mean, 'f', 2));
-    ui->labelMode->setText(QString::number(mode, 'f', 2));
-    ui->labelMedian->setText(QString::number(median, 'f', 2));
-    ui->labelSD->setText(QString::number(stddev, 'f', 2));
-    ui->labelVar->setText(QString::number(variance, 'f', 2));
-    ui->labelIQR->setText(QString::number(iqr, 'f', 2));
+    ui->labelMean->setText(QString::number(mean));
+    ui->labelMode->setText(QString::number(mode));
+    ui->labelMedian->setText(QString::number(median));
+    ui->labelSD->setText(QString::number(stddev));
+    ui->labelVar->setText(QString::number(variance));
+    ui->labelIQR->setText(QString::number(iqr));
 }
 
 void MainWindow::updateGraph()
@@ -218,8 +218,8 @@ void MainWindow::updateGraph()
     ui->customPlot->addGraph();
     ui->customPlot->graph(0)->setData(x, y);
     ui->customPlot->xAxis->setLabel("x");
-    ui->customPlot->yAxis->setLabel("Probability Density");
-    ui->customPlot->xAxis->setRange(s.mean - 2.5*s.std_dev ,max_score);
+    ui->customPlot->yAxis->setLabel("Probability Density(p(x))");
+    ui->customPlot->xAxis->setRange(Minimum_score,max_score);
     ui->customPlot->yAxis->rescale();
     ui->customPlot->replot();
 }
@@ -264,6 +264,7 @@ void MainWindow :: onupdategrades(){
     ui->LabelD->setText(QString::number(tD));
 
 }
+
 
 
 
